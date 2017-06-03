@@ -23,7 +23,7 @@ mkdir -p "$BUILD_DIR/$VENDOR_DIR"
 
 cp -v * "$BUILD_DIR/$VENDOR_DIR" | indent
 
-export PATH="$PATH:$HOME/$VENDOR"
+export PATH="$PATH:$HOME/$VENDOR_DIR"
 
 echo "-----> Adding Watchman symlink to make it available in next buildpacks"
 
