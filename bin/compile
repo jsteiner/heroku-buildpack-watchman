@@ -3,31 +3,15 @@
 
 set -eu
 
-mkdir -p "$1" "$2" # Ensure dirs are present
-
-BUILD_DIR=$(cd "$1" && pwd)
-CACHE_DIR=$(cd "$2" && pwd)
-CACHED_WATCHMAN="$CACHE_DIR/watchmen"
 VENDOR_BIN_DIR="$HOME/vendor/bin"
-
 WATCHMAN="./watchman"
+STATE_DIR="$HOME/watchman_state"
 
-STATE_DIR="$CACHE_DIR/watchman_state"
+echo "******************************************************"
+pwd
+echo "******************************************************"
 
-if [ ! -f "$CACHED_WATCHMAN" ]; then
-  cd "$BUILD_DIR"
-  git clone https://github.com/facebook/watchman.git
-  cd watchman
-  ./autogen.sh
+mkdir -p "$STATE_DIR"
+mkdir -p "$VENDOR_BIN_DIR"
 
-  mkdir "$STATE_DIR"
-  ./configure --enable-statedir="$STATE_DIR"
-
-  make
-
-  mv "$WATCHMAN" "$CACHED_WATCHMAN"
-fi
-
-# mkdir -p "$VENDOR_BIN_DIR"
-# PATH="$PATH:$VENDOR_BIN_DIR"
-cp "$CACHED_WATCHMAN" "$VENDOR_BIN_DIR"
+mv "$WATCHMAN" "$VENDOR_BIN_DIR"
