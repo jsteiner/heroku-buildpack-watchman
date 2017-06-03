@@ -3,19 +3,49 @@
 
 set -eu
 
-VENDOR_BIN_DIR="$HOME/vendor/bin"
-WATCHMAN="./watchman"
+BUILD_DIR="$1"
+WORKING_DIR=$(pwd)
+BIN_DIR=$(cd $(dirname $0); pwd)
+ROOT_DIR=$(dirname "$BIN_DIR")
+VENDOR_DIR="vendor"
+
 STATE_DIR="$HOME/watchman_state"
 
-echo "******************************************************"
-ls
-echo "******************************************************"
+indent() {
+  sed -u 's/^/       /'
+}
+
+echo "-----> Adding Watchman Binary"
+
+cd "$ROOT_DIR/$VENDOR_DIR"
+
+mkdir -p "$BUILD_DIR/$VENDOR_DIR"
+
+cp -v * "$BUILD_DIR/$VENDOR_DIR" | indent
+
+export PATH="$PATH:$HOME/$VENDOR"
+
+echo "-----> Adding Watchman symlink to make it available in next buildpacks"
+
+cd /tmp/codon/vendor/bin
+
+ln -s "${BUILD_DIR}/${VENDOR_DIR}/watchman" watchman
+
+echo "-----> Adding Watchman Binary to PATH"
+
+
+cd "$ROOT_DIR/profile.d"
+
+mkdir -p "$BUILD_DIR/.profile.d"
+
+cp -v * "$BUILD_DIR/.profile.d/" | indent
+
+cd "$WORKING_DIR"
+
+echo "-----> Creating watchman_state directory"
 
 mkdir -p "$STATE_DIR"
-mkdir -p "$VENDOR_BIN_DIR"
 
-mv "$WATCHMAN" "$VENDOR_BIN_DIR"
+echo "-----> Watchman version"
 
-echo "******************************************************"
-ls "$VENDOR_BIN_DIR"
-echo "******************************************************"
+watchman -v | indent
