@@ -8,10 +8,14 @@ WATCHMAN="./watchman"
 STATE_DIR="$HOME/watchman_state"
 
 echo "******************************************************"
-pwd
+ls
 echo "******************************************************"
 
 mkdir -p "$STATE_DIR"
 mkdir -p "$VENDOR_BIN_DIR"
 
 mv "$WATCHMAN" "$VENDOR_BIN_DIR"
+
+echo "******************************************************"
+ls "$VENDOR_BIN_DIR"
+echo "******************************************************"
