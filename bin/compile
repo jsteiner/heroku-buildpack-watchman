@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir> <env-dir>
+
+set -eu
+
+mkdir -p "$1" "$2" "$3" # Ensure dirs are present
+
+BUILD_DIR=$(cd "$1" && pwd)
+CACHE_DIR=$(cd "$2" && pwd)
+CACHED_WATCHMAN="$CACHE_DIR/watchman"
+
+WATCHMAN="/usr/local/bin/watchman"
+
+STATE_DIR="$CACHE_DIR/watchman_state"
+
+if [ ! -f "$CACHED_WATCHMAN" ]; then
+  cd "$BUILD_DIR"
+  git clone https://github.com/facebook/watchman.git
+  cd watchman
+  ./autogen.sh
+
+  mkdir "$STATE_DIR"
+  ./configure --enable-statedir="$STATE_DIR"
+
+  make
+  make install
+
+  mv "$WATCHMAN" "$CACHED_WATCHMAN"
+fi
+
+ln -sf "$CACHED_WATCHMAN" "$WATCHMAN"
