@@ -3,13 +3,14 @@
 
 set -eu
 
-mkdir -p "$1" "$2" "$3" # Ensure dirs are present
+mkdir -p "$1" "$2" # Ensure dirs are present
 
 BUILD_DIR=$(cd "$1" && pwd)
 CACHE_DIR=$(cd "$2" && pwd)
-CACHED_WATCHMAN="$CACHE_DIR/watchman"
+CACHED_WATCHMAN="$CACHE_DIR/watchmen"
+VENDOR_BIN_DIR="$HOME/vendor/bin"
 
-WATCHMAN="/usr/local/bin/watchman"
+WATCHMAN="./watchman"
 
 STATE_DIR="$CACHE_DIR/watchman_state"
 
@@ -23,9 +24,10 @@ if [ ! -f "$CACHED_WATCHMAN" ]; then
   ./configure --enable-statedir="$STATE_DIR"
 
   make
-  make install
 
   mv "$WATCHMAN" "$CACHED_WATCHMAN"
 fi
 
-ln -sf "$CACHED_WATCHMAN" "$WATCHMAN"
+# mkdir -p "$VENDOR_BIN_DIR"
+# PATH="$PATH:$VENDOR_BIN_DIR"
+cp "$CACHED_WATCHMAN" "$VENDOR_BIN_DIR"

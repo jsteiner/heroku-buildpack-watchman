@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -eu
+
+cat <<EOF
+---
+addons:
+config_vars:
+  PATH: $PATH:$HOME/vendor/bin
+default_process_types:
+EOF
