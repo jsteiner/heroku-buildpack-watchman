@@ -31,16 +31,15 @@ cd /tmp/codon/vendor/bin
 
 ln -s "${BUILD_DIR}/${VENDOR_DIR}/watchman" watchman
 
-echo "-----> Adding Watchman Binary to PATH"
-
-
-cd "$ROOT_DIR/profile.d"
-
-mkdir -p "$BUILD_DIR/.profile.d"
-
-cp -v * "$BUILD_DIR/.profile.d/" | indent
-
-cd "$WORKING_DIR"
+# echo "-----> Adding Watchman Binary to PATH"
+#
+# cd "$ROOT_DIR/profile.d"
+#
+# mkdir -p "$BUILD_DIR/.profile.d"
+#
+# cp -v * "$BUILD_DIR/.profile.d/" | indent
+#
+# cd "$WORKING_DIR"
 
 echo "-----> Creating watchman_state directory"
 
