@@ -6,6 +6,6 @@ cat <<EOF
 ---
 addons:
 config_vars:
-  PATH: $PATH:$HOME/vendor/bin
+  PATH: $PATH:/app/vendor/bin
 default_process_types:
 EOF
