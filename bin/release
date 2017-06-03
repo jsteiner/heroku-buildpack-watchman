@@ -2,10 +2,4 @@
 
 set -eu
 
-cat <<EOF
----
-addons:
-config_vars:
-  PATH: $PATH:/app/vendor/bin
-default_process_types:
-EOF
+echo "--- {}"

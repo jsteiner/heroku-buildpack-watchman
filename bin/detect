@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
+# bin/detect <build-dir>
 
 set -eu
 
-echo "watchman"
+echo "Watchman Buildpack"
 exit 0
